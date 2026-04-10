@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Footprint Logger</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<h1>🌍 Footprint Logger</h1>
+
+<form id="activityForm">
+  <input type="text" id="name" placeholder="Activity name" required>
+
+  <select id="type">
+    <option value="transport">Transport</option>
+    <option value="food">Food</option>
+    <option value="energy">Energy</option>
+  </select>
+
+  <input type="number" id="co2" placeholder="CO2 value" required>
+
+  <button type="submit">Add Activity</button>
+</form>
+
+<h2>Total CO2: <span id="total">0</span></h2>
+
+<ul id="list"></ul>
+
+<script src="script.js"></script>
+</body>
+</html>

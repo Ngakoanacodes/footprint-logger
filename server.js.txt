@@ -1,0 +1,50 @@
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+
+const app = express();
+app.use(express.json());
+app.use(cors());
+
+mongoose.connect("mongodb://127.0.0.1:27017/footprint");
+
+const User = mongoose.model("User", {
+  username: String,
+  password: String
+});
+
+const Activity = mongoose.model("Activity", {
+  userId: String,
+  name: String,
+  type: String,
+  co2: Number
+});
+
+// Register
+app.post("/register", async (req, res) => {
+  const user = new User(req.body);
+  await user.save();
+  res.send("User registered");
+});
+
+// Login
+app.post("/login", async (req, res) => {
+  const user = await User.findOne(req.body);
+  if (user) res.send(user);
+  else res.send("User not found");
+});
+
+// Add Activity
+app.post("/activity", async (req, res) => {
+  const activity = new Activity(req.body);
+  await activity.save();
+  res.send("Activity saved");
+});
+
+// Get Activities
+app.get("/activity/:userId", async (req, res) => {
+  const data = await Activity.find({ userId: req.params.userId });
+  res.send(data);
+});
+
+app.listen(3000, () => console.log("Server running"));
